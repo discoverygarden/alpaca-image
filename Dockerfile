@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.20_8-jre-focal
+FROM eclipse-temurin:11.0.23_9-jre-focal
 
 ENV ALPACA_VERSION="2.2.0"
 ENV ALPACA_LOG_LEVEL="INFO"
