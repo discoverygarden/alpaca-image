@@ -1,6 +1,7 @@
 FROM eclipse-temurin:11.0.23_9-jre-focal
 
-ENV ALPACA_VERSION="2.2.0"
+# renovate: datasource=maven depName=alpaca packageName=ca.islandora.alpaca:islandora-alpaca-app
+ENV ALPACA_VERSION=2.2.0
 ENV ALPACA_LOG_LEVEL="INFO"
 ENV ALPACA_HEAP="512m"
 ENV ACTIVEMQ_HOST="activemq"
