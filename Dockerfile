@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11.0.26_4-jre-focal
+FROM eclipse-temurin:11.0.27_6-jre-focal
 
 # renovate: datasource=maven depName=alpaca packageName=ca.islandora.alpaca:islandora-alpaca-app
 ENV ALPACA_VERSION=2.2.0
