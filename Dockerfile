@@ -9,6 +9,7 @@ ENV ACTIVEMQ_JMS_PORT="61616"
 ENV HOMARUS_URL="http://crayfish/homarus/convert"
 ENV HOUDINI_URL="http://crayfish/houdini/convert"
 ENV HYPERCUBE_URL="http://crayfish/hypercube"
+ENV CONCURRENT_CONSUMERS="1"
 
 RUN useradd alpaca
 
@@ -27,6 +28,9 @@ CMD java -Dislandora.alpaca.log=${ALPACA_LOG_LEVEL} \
     -Dderivative.homarus.service.url=${HOMARUS_URL} \
     -Dderivative.houdini.service.url=${HOUDINI_URL} \
     -Dderivative.ocr.service.url=${HYPERCUBE_URL} \
+    -Dderivative.homarus.concurrent-consumers=${CONCURRENT_CONSUMERS} \
+    -Dderivative.houdini.concurrent-consumers=${CONCURRENT_CONSUMERS} \
+    -Dderivative.ocr.concurrent-consumers=${CONCURRENT_CONSUMERS} \
     -Xmx${ALPACA_HEAP} \
     -jar /opt/alpaca/islandora-alpaca-app-all.jar \
     -c /opt/alpaca/alpaca.properties
