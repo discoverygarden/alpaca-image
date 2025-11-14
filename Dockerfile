@@ -3,7 +3,7 @@ FROM eclipse-temurin:11.0.27_6-jre-focal
 # renovate: datasource=maven depName=alpaca packageName=ca.islandora.alpaca:islandora-alpaca-app
 ENV ALPACA_VERSION=2.2.0
 ENV ALPACA_LOG_LEVEL="INFO"
-ENV JAVE_MEMORY="-Xms512 -Xmx512"
+ENV JAVE_MEMORY="-Xms512m -Xmx512m"
 ENV ACTIVEMQ_HOST="activemq"
 ENV ACTIVEMQ_JMS_PORT="61616"
 ENV HOMARUS_URL="http://crayfish/homarus/convert"
