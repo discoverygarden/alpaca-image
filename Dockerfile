@@ -19,6 +19,13 @@ ADD --chown=alpaca:alpaca \
 
 COPY --chown=alpaca:alpaca \
   alpaca.properties /opt/alpaca
+
+# renovate: datasource=github-releases depName=prometheus/jmx_exporter
+ARG JMX_EXRPORTER_VERSION=1.4.0
+WORKDIR /jmx
+ADD --link --chmod=644 https://github.com/prometheus/jmx_exporter/releases/download/$JMX_EXRPORTER_VERSION/jmx_prometheus_javaagent-$JMX_EXRPORTER_VERSION.jar jmx_prometheus_javaagent.jar
+COPY --chmod=644 jmx.yml ./
+
 USER alpaca
 
 WORKDIR /opt/alpaca
@@ -32,5 +39,6 @@ CMD java -Dislandora.alpaca.log=${ALPACA_LOG_LEVEL} \
     -Dderivative.houdini.concurrent-consumers=${CONCURRENT_CONSUMERS} \
     -Dderivative.ocr.concurrent-consumers=${CONCURRENT_CONSUMERS} \
     -Xmx${ALPACA_HEAP} \
+    -javaagent:/jmx/jmx_prometheus_javaagent.jar=3001:/jmx/jmx.yml \
     -jar /opt/alpaca/islandora-alpaca-app-all.jar \
     -c /opt/alpaca/alpaca.properties
