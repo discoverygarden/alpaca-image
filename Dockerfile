@@ -35,15 +35,22 @@ USER alpaca
 
 WORKDIR /opt/alpaca
 
-CMD java -Dislandora.alpaca.log=${ALPACA_LOG_LEVEL} \
-    -Djms.brokerUrl=tcp://${ACTIVEMQ_HOST}:${ACTIVEMQ_JMS_PORT} \
-    -Dderivative.homarus.service.url=${HOMARUS_URL} \
-    -Dderivative.houdini.service.url=${HOUDINI_URL} \
-    -Dderivative.ocr.service.url=${HYPERCUBE_URL} \
-    -Dderivative.homarus.concurrent-consumers=${CONCURRENT_CONSUMERS} \
-    -Dderivative.houdini.concurrent-consumers=${CONCURRENT_CONSUMERS} \
-    -Dderivative.ocr.concurrent-consumers=${CONCURRENT_CONSUMERS} \
-    $JAVA_MEMORY \
-    -javaagent:/jmx/jmx_prometheus_javaagent.jar=3001:/jmx/jmx.yml \
-    -jar /opt/alpaca/islandora-alpaca-app-all.jar \
-    -c /opt/alpaca/alpaca.properties
+COPY --chmod=755 <<"EOT" /entrypoint.sh
+#!/usr/bin/env bash
+
+set -x
+exec java -Dislandora.alpaca.log=${ALPACA_LOG_LEVEL} \
+  -Djms.brokerUrl=tcp://${ACTIVEMQ_HOST}:${ACTIVEMQ_JMS_PORT} \
+  -Dderivative.homarus.service.url=${HOMARUS_URL} \
+  -Dderivative.houdini.service.url=${HOUDINI_URL} \
+  -Dderivative.ocr.service.url=${HYPERCUBE_URL} \
+  -Dderivative.homarus.concurrent-consumers=${CONCURRENT_CONSUMERS} \
+  -Dderivative.houdini.concurrent-consumers=${CONCURRENT_CONSUMERS} \
+  -Dderivative.ocr.concurrent-consumers=${CONCURRENT_CONSUMERS} \
+  $JAVA_MEMORY \
+  -javaagent:/jmx/jmx_prometheus_javaagent.jar=3001:/jmx/jmx.yml \
+  -jar /opt/alpaca/islandora-alpaca-app-all.jar \
+  -c /opt/alpaca/alpaca.properties
+EOT
+
+CMD ["/entrypoint.sh"]
