@@ -10,6 +10,10 @@ ENV HOMARUS_URL="http://crayfish/homarus/convert"
 ENV HOUDINI_URL="http://crayfish/houdini/convert"
 ENV HYPERCUBE_URL="http://crayfish/hypercube"
 ENV CONCURRENT_CONSUMERS="1"
+ENV REQUEST_CONFIGURER_ENABLED="false"
+ENV REQUEST_TIMEOUT="-1"
+ENV CONNECTION_TIMEOUT="-1"
+ENV SOCKET_TIMEOUT="-1"
 
 RUN useradd alpaca
 
@@ -47,6 +51,10 @@ exec java -Dislandora.alpaca.log=${ALPACA_LOG_LEVEL} \
   -Dderivative.homarus.concurrent-consumers=${CONCURRENT_CONSUMERS} \
   -Dderivative.houdini.concurrent-consumers=${CONCURRENT_CONSUMERS} \
   -Dderivative.ocr.concurrent-consumers=${CONCURRENT_CONSUMERS} \
+  -Drequest.configurer.enabled=${REQUEST_CONFIGURER_ENABLED} \
+  -Drequest.timeout=${REQUEST_TIMEOUT} \
+  -Dconnection.timeout=${CONNECTION_TIMEOUT} \
+  -Dsocket.timeout=${SOCKET_TIMEOUT} \
   $JAVA_MEMORY \
   -javaagent:/jmx/jmx_prometheus_javaagent.jar=3001:/jmx/jmx.yml \
   -jar /opt/alpaca/islandora-alpaca-app-all.jar \
