@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17.0.21.1_2-jre-noble
+FROM eclipse-temurin:17-jre-noble
 
 # renovate: datasource=maven depName=alpaca packageName=ca.islandora.alpaca:islandora-alpaca-app
 ENV ALPACA_VERSION=2.2.0
